@@ -1,0 +1,12 @@
+.apiResult_container{
+    width: 70%;
+    margin: auto;
+    
+}
+.result{
+    height: auto;
+    background: #383838;
+    color: white;
+    width: 100%;
+
+}
