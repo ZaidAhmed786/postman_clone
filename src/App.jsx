@@ -22,10 +22,13 @@ function App() {
     setResponse,
     headersNewkey,
     headersNewvalue,
+
+    headersData,
+    
     bodyData  } = useContext(AppContext);
 
   
-console.log(bodyData)
+
   const handleSearch = async () => {
     try {
       setIsLoading(true);
@@ -35,11 +38,15 @@ console.log(bodyData)
       };
 
       // Add headers only if headersNewkey has a value
-      if (headersNewkey) {
-        options.headers = {
-          [headersNewkey]: headersNewvalue,
-        };
+      if (headersData) {
+
+        const newHeaders = {}
+        headersData.forEach((head)=>{
+          newHeaders[head.id]=head.value
+        })
+        options.headers = newHeaders
       }
+
 
       const res = await fetch(url, options);
 

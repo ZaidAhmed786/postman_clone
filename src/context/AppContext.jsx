@@ -8,7 +8,7 @@ const AppProvider = ({ children }) => {
   const [response, setResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState("https://jsonplaceholder.typicode.com/todos/1");
   const [method, setMethod] = useState("GET"); // Default method is GET
   const [paramsData, setParamsData] = useState([]);
   const [tableData, setTableData] = useState([]);
@@ -21,6 +21,7 @@ const AppProvider = ({ children }) => {
   const [headersNewvalue , setHeadersNewvalue] = useState("");
 
   const [bodyData , setBodyData] = useState("")
+
 
 
 

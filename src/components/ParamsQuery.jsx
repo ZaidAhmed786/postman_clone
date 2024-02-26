@@ -1,45 +1,42 @@
 import { AppContext } from "../context/AppContext";
 import styles from "./paramsquery.module.css";
-import { useEffect, useContext} from "react";
+import { useEffect, useContext,useState} from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 const ParamsQuery = () => {
+
+  const [paramKey, setParamKey] = useState("")
+  const [paramValue, setParamValue] = useState("")
+
+
   const {
     onAddParams,
     paramsData,
     tableData,
-    setTableData,
-    paramsNewkey,
-    setParamsNewkey,
-    paramsNewvalue,
-    setParamsNewvalue,
   } = useContext(AppContext);
 
 
-  useEffect(() => {
-    if (paramsData && paramsData.length > 0) {
-      setTableData(paramsData);
-      setParamsNewkey(paramsData[paramsData.length - 1].id); // Make sure it's a string
-      setParamsNewvalue(paramsData[paramsData.length - 1].value); // Make sure it's a string
-    }
-  }, [paramsData, setTableData,setParamsNewkey,setParamsNewvalue]);
 
-  const handleDeleteRow = (id) => {
-    const filterData = tableData.filter((item) => item.id !== id);
-    setTableData([...filterData]);
+
+  const handleDeleteRow = (index) => {
+    const filterData =[];
+    paramsData.map((item,interanlIndex) => {
+      if(index !== interanlIndex){
+        filterData.push(item)
+      }
+     });
     onAddParams([...filterData]);
   };
 
   const handleSave = () => {
-    if (!paramsNewkey.trim() && !paramsNewvalue.trim()) {
+
+    if (!paramKey.trim() && !paramValue.trim()) {
       toast.error("Both fields are required");
       return;
     }
-
-    setTableData([...tableData, { id: paramsNewkey, value: paramsNewvalue }]);
-    onAddParams([...tableData, { id: paramsNewkey, value: paramsNewvalue }]);
-    setParamsNewkey("");
-    setParamsNewvalue("");
+    onAddParams([...paramsData, { id: paramKey, value: paramValue }]);
+    setParamKey("");
+    setParamValue("");
   };
 
   return (
@@ -55,7 +52,7 @@ const ParamsQuery = () => {
           </tr>
         </thead>
         <tbody>
-          {tableData?.map((item) => (
+          {paramsData?.map((item,index) => (
             <tr key={item.id}>
               <td>
                 <span>{item.id}</span>
@@ -64,7 +61,7 @@ const ParamsQuery = () => {
                 <span>{item.value}</span>
               </td>
               <td>
-                <button onClick={() => handleDeleteRow(item.id)}>Delete</button>
+                <button onClick={() => handleDeleteRow(index)}>Delete</button>
               </td>
             </tr>
           ))}
@@ -72,9 +69,9 @@ const ParamsQuery = () => {
             <td>
               <input
                 type='text'
-                value={paramsNewkey}
+                value={paramKey}
                 onChange={(e) => {
-                  setParamsNewkey(e.target.value);
+                  setParamKey(e.target.value);
                 }}
                 required
               />
@@ -82,9 +79,9 @@ const ParamsQuery = () => {
             <td>
               <input
                 type='text'
-                value={paramsNewvalue}
+                value={paramValue}
                 onChange={(e) => {
-                  setParamsNewvalue(e.target.value);
+                  setParamValue(e.target.value);
                 }}
                 required
               />

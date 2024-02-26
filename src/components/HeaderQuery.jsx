@@ -6,39 +6,39 @@ import toast, { Toaster } from "react-hot-toast";
 
 const HeaderQuery = () => {
   const {
-    onAddHeaders,
     headersData,
-    headersNewkey,
-    setHeadersNewkey,
-    headersNewvalue,
-    setHeadersNewvalue,
-    tableHeadersData,
-    setTableHeadersData
+    setHeadersData
   } = useContext(AppContext);
 
+  const [headersKey, setHeadersKey] = useState("x-")
+  const [headersValue, setHeadersValue] = useState("")
 
-  useEffect(() => {
-    if (headersData && headersData.length > 0) {
-      setTableHeadersData(headersData);
-      setHeadersNewkey(headersData[headersData.length - 1]?.id.toString() || ""); // Default to empty string if headersData is empty
-      setHeadersNewvalue(headersData[headersData.length - 1]?.value.toString() || ""); // Default to empty string if headersData is empty
-    }
-  }, [headersData, setTableHeadersData]);
 
-  const handleDeleteRow = (id) => {
-    const filterData = tableHeadersData.filter((item) => item.id !== id);
-    setTableHeadersData([...filterData]);
-    onAddHeaders([...filterData]);
+
+
+  const handleDeleteRow = (index) => {
+    
+    // const filterData =[];
+    // tableHeadersData.map((item,interanlIndex) => {
+    //   if(index !== interanlIndex){
+    //     filterData.push(item)
+    //   }
+    //  });
+    //  setTableHeadersData([...filterData]);
+
+    // onAddParams([...filterData]);
   };
+  
 
   const handleSave = () => {
-    if (!headersNewkey || !headersNewvalue) {
+    if (!headersKey || !headersValue) {
       toast.error("Both fields are required");
       return;
     }
 
-    setTableHeadersData([...tableHeadersData, { id: headersNewkey, value: headersNewvalue }]);
-    // onAddHeaders([...tableHeadersData, { id: headersNewkey, value: headersNewvalue }]);
+    setHeadersData([...headersData, { id: headersKey, value: headersValue }]);
+    setHeadersKey('x-');
+    setHeadersValue('');
  
   };
 
@@ -56,7 +56,7 @@ const HeaderQuery = () => {
           </tr>
         </thead>
         <tbody>
-          {tableHeadersData?.map((item) => (
+          {headersData?.map((item , index) => (
             <tr key={item.id}>
               <td>
                 <span>{item.id}</span>
@@ -65,7 +65,7 @@ const HeaderQuery = () => {
                 <span>{item.value}</span>
               </td>
               <td>
-                <button onClick={() => handleDeleteRow(item.id)}>Delete</button>
+                <button onClick={() => handleDeleteRow(index)}>Delete</button>
               </td>
             </tr>
           ))}
@@ -73,18 +73,18 @@ const HeaderQuery = () => {
             <td>
               <input
                 type='text'
-                value={headersNewkey}
+                value={headersKey}
                 onChange={(e) => {
-                  setHeadersNewkey(e.target.value);
+                  setHeadersKey(e.target.value);
                 }}
               />
             </td>
             <td>
               <input
                 type='text'
-                value={headersNewvalue}
+                value={headersValue}
                 onChange={(e) => {
-                  setHeadersNewvalue(e.target.value);
+                  setHeadersValue(e.target.value);
                 }}
               />
             </td>
