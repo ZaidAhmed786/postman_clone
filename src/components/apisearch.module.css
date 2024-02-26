@@ -20,7 +20,7 @@
   }
   
   .apiSearch_container select {
-    min-width: 80px;
+    min-width: 100px;
   }
   
   .apiSearch_container button {

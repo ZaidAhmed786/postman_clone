@@ -17,15 +17,15 @@ function App() {
     response,
     url,
     method,
- 
     setIsLoading,
     setError,
     setResponse,
     headersNewkey,
-    headersNewvalue,  } = useContext(AppContext);
+    headersNewvalue,
+    bodyData  } = useContext(AppContext);
 
   
-console.log(headersNewkey, headersNewvalue)
+console.log(bodyData)
   const handleSearch = async () => {
     try {
       setIsLoading(true);
@@ -46,6 +46,7 @@ console.log(headersNewkey, headersNewvalue)
       // Make the API request with method and options
       if (!res.ok) {
         toast.error("Failed to fetch data");
+        return
       }
       // const data = await res.json();
       setResponse(res); // Set response data
@@ -75,3 +76,10 @@ console.log(headersNewkey, headersNewvalue)
 }
 
 export default App;
+
+
+
+
+
+
+

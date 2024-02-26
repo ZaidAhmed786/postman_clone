@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "./apiresult.module.css";
 import ReactJson from "react-json-view";
+import toast, { Toaster } from "react-hot-toast";
+
 
 const ApiResult = ({ response }) => {
   const [jsonData, setJsonData] = useState(null);
@@ -11,7 +13,7 @@ const ApiResult = ({ response }) => {
         const data = await response.json();
         setJsonData(data);
       } catch (error) {
-        console.error("Error parsing JSON response:", error);
+        toast.error("Error parsing JSON response:", error);
       }
     };
 
@@ -21,14 +23,14 @@ const ApiResult = ({ response }) => {
   }, [response]);
 
   if (!response) {
-    return null; 
+    return null;
   }
 
- 
   return (
     <div className={styles.apiResult_container}>
+      <Toaster/>
       <h4>Result</h4>
-
+    
       <div className={styles.result}>
         <ReactJson
           src={jsonData}

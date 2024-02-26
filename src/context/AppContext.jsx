@@ -20,6 +20,8 @@ const AppProvider = ({ children }) => {
   const [headersNewkey , setHeadersNewkey] = useState("");
   const [headersNewvalue , setHeadersNewvalue] = useState("");
 
+  const [bodyData , setBodyData] = useState("")
+
 
 
   const onAddParams = (tableData) => {
@@ -87,7 +89,9 @@ const AppProvider = ({ children }) => {
         tableHeadersData,
         setTableHeadersData,
         headersData,
-        setHeadersData
+        setHeadersData,
+        bodyData,
+        setBodyData
       }}>
       {children}
     </AppContext.Provider>
