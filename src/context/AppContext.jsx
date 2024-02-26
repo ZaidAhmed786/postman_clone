@@ -17,7 +17,7 @@ const AppProvider = ({ children }) => {
 
   const [tableHeadersData, setTableHeadersData] = useState([]);
 
-  const [bodyData, setBodyData] = useState("");
+  const [bodyData, setBodyData] = useState([]);
 
   const onAddParams = (tableData) => {
     const queryParams = tableData

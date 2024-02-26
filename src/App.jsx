@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import "./App.css";
 import ApiSearch from "./components/ApiSearch";
 import Header from "./components/Header";
@@ -8,7 +8,7 @@ import ParamsQuery from "./components/ParamsQuery";
 import ApiResult from "./components/ApiResult";
 import { AppContext } from "./context/AppContext";
 import HeaderQuery from "./components/HeaderQuery";
-import BodyParams from "./components/BodyParams";
+import BodyParams from "./components/BodyQuery";
 import toast, { Toaster } from "react-hot-toast";
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
     
     bodyData  } = useContext(AppContext);
 
-  
+  console.log(bodyData)
 
   const handleSearch = async () => {
     try {
@@ -47,13 +47,29 @@ function App() {
         options.headers = newHeaders
       }
 
+      
+      if (method !== "GET" && bodyData) {
+        const formData = new FormData();
+      
+        bodyData.forEach((body) => {
+          console.log(body)
+          formData.append(body.id, body.value);
+        });
+      
+        options.body = formData;
+      }
 
       const res = await fetch(url, options);
 
       // Make the API request with method and options
       if (!res.ok) {
-        toast.error("Failed to fetch data");
-        return
+        // Check if it's a 404 error
+        if (res.status === 404) {
+          toast.error("404: Not Found");
+        } else {
+          toast.error(`Failed to fetch data: ${res.status}`);
+        }
+        return;
       }
       // const data = await res.json();
       setResponse(res); // Set response data
