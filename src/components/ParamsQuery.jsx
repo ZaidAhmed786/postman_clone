@@ -12,7 +12,6 @@ const ParamsQuery = () => {
   const {
     onAddParams,
     paramsData,
-    tableData,
   } = useContext(AppContext);
 
 

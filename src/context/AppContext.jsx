@@ -8,22 +8,16 @@ const AppProvider = ({ children }) => {
   const [response, setResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [url, setUrl] = useState("https://jsonplaceholder.typicode.com/todos/1");
+  const [url, setUrl] = useState(
+    "https://jsonplaceholder.typicode.com/todos/1"
+  );
   const [method, setMethod] = useState("GET"); // Default method is GET
   const [paramsData, setParamsData] = useState([]);
-  const [tableData, setTableData] = useState([]);
   const [headersData, setHeadersData] = useState([]);
 
   const [tableHeadersData, setTableHeadersData] = useState([]);
-  const [paramsNewkey, setParamsNewkey] = useState("");
-  const [paramsNewvalue, setParamsNewvalue] = useState("");
-  const [headersNewkey , setHeadersNewkey] = useState("");
-  const [headersNewvalue , setHeadersNewvalue] = useState("");
 
-  const [bodyData , setBodyData] = useState("")
-
-
-
+  const [bodyData, setBodyData] = useState("");
 
   const onAddParams = (tableData) => {
     const queryParams = tableData
@@ -39,24 +33,10 @@ const AppProvider = ({ children }) => {
     const newUrl = url.split("?");
     setUrl(`${newUrl[0]}?${queryParams}`);
     //setParamsData for remind the state after comeback
-    setParamsData(tableData); // Update paramsData state
+    setParamsData(tableData);
   };
 
-  const onAddHeaders = (tableHeadersData) => {
-    const queryParams = tableHeadersData
-      .reduce((acc, curr) => {
-        if (curr.id && curr.value) {
-          acc.push(
-            `${encodeURIComponent(curr.id)}=${encodeURIComponent(curr.value)}`
-          );
-        }
-        return acc;
-      }, [])
-      .join("&");
-    const newUrl = url.split("?");
-    setUrl(`${newUrl[0]}?${queryParams}`);
-    setParamsData(tableData); // Update paramsData state
-  };
+ 
 
   return (
     <AppContext.Provider
@@ -76,23 +56,12 @@ const AppProvider = ({ children }) => {
         paramsData,
         setParamsData,
         onAddParams,
-        tableData,
-        setTableData,
-        paramsNewkey,
-        setParamsNewkey,
-        paramsNewvalue,
-        setParamsNewvalue,
-        headersNewkey,
-        setHeadersNewkey,
-        headersNewvalue,
-        setHeadersNewvalue,
-        onAddHeaders,
         tableHeadersData,
         setTableHeadersData,
         headersData,
         setHeadersData,
         bodyData,
-        setBodyData
+        setBodyData,
       }}>
       {children}
     </AppContext.Provider>

@@ -1,34 +1,23 @@
 import { AppContext } from "../context/AppContext";
 import styles from "./paramsquery.module.css";
-import { useEffect, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-
 const HeaderQuery = () => {
-  const {
-    headersData,
-    setHeadersData
-  } = useContext(AppContext);
+  const { headersData, setHeadersData } = useContext(AppContext);
 
-  const [headersKey, setHeadersKey] = useState("x-")
-  const [headersValue, setHeadersValue] = useState("")
-
-
-
+  const [headersKey, setHeadersKey] = useState("x-");
+  const [headersValue, setHeadersValue] = useState("");
 
   const handleDeleteRow = (index) => {
-    
-    // const filterData =[];
-    // tableHeadersData.map((item,interanlIndex) => {
-    //   if(index !== interanlIndex){
-    //     filterData.push(item)
-    //   }
-    //  });
-    //  setTableHeadersData([...filterData]);
-
-    // onAddParams([...filterData]);
+    const filterData = [];
+    headersData.map((item, interanlIndex) => {
+      if (index !== interanlIndex) {
+        filterData.push(item);
+      }
+    });
+    setHeadersData([...filterData]);
   };
-  
 
   const handleSave = () => {
     if (!headersKey || !headersValue) {
@@ -37,14 +26,13 @@ const HeaderQuery = () => {
     }
 
     setHeadersData([...headersData, { id: headersKey, value: headersValue }]);
-    setHeadersKey('x-');
-    setHeadersValue('');
- 
+    setHeadersKey("x-");
+    setHeadersValue("");
   };
 
   return (
     <div className={styles.paramsQuery_container}>
-            <Toaster/>
+      <Toaster />
 
       <p>Headers</p>
       <table>
@@ -56,7 +44,7 @@ const HeaderQuery = () => {
           </tr>
         </thead>
         <tbody>
-          {headersData?.map((item , index) => (
+          {headersData?.map((item, index) => (
             <tr key={item.id}>
               <td>
                 <span>{item.id}</span>
