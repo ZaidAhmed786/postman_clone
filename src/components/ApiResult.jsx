@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import styles from "./apiresult.module.css";
-import ReactJson from 'react-json-view';
+import ReactJson from "react-json-view";
 
 const ApiResult = ({ response }) => {
   const [jsonData, setJsonData] = useState(null);
@@ -11,7 +11,7 @@ const ApiResult = ({ response }) => {
         const data = await response.json();
         setJsonData(data);
       } catch (error) {
-        console.error('Error parsing JSON response:', error);
+        console.error("Error parsing JSON response:", error);
       }
     };
 
@@ -21,36 +21,21 @@ const ApiResult = ({ response }) => {
   }, [response]);
 
   if (!response) {
-    return null; // Handle case when response is null or undefined
+    return null; 
   }
 
-  const contentType = response.headers.get("content-type");
-
-  // Check if the response is HTML
-  const isHTML = contentType && contentType.includes("text/html");
-
-  // Check if the response is XML
-  const isXML = contentType && contentType.includes("text/xml");
-
+ 
   return (
     <div className={styles.apiResult_container}>
       <h4>Result</h4>
-      {isHTML && (
-        <div
-          className={styles.result}
-          dangerouslySetInnerHTML={{ __html: response.text() }}
+
+      <div className={styles.result}>
+        <ReactJson
+          src={jsonData}
+          theme='bright:inverted'
+          collapsed='1'
         />
-      )}
-      {isXML && (
-        <div className={styles.result}>
-          <pre>{response.text()}</pre>
-        </div>
-      )}
-      {!isHTML && !isXML && jsonData && (
-        <div className={styles.result}>
-          <ReactJson src={jsonData} theme="bright:inverted" collapsed='1' />
-        </div>
-      )}
+      </div>
     </div>
   );
 };

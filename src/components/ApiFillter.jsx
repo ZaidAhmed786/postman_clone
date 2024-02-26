@@ -1,9 +1,13 @@
-// import { useState } from 'react';
+import { useContext } from "react";
 import styles from "./apifillter.module.css"; 
+import { AppContext } from "../context/AppContext";
 
-// eslint-disable-next-line react/prop-types
-const ApiFillter = ({activeMenu, setActiveMenu}) => {
-//   const [activeMenu, setActiveMenu] = useState('params');
+const ApiFillter = () => {
+  const {
+    activeMenu,
+    setActiveMenu
+   
+  } = useContext(AppContext);
 
 
   return (

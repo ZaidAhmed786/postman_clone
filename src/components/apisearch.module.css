@@ -1,18 +1,51 @@
-.apiSearch_container{
-    display: flex;
-    background-color: #af3838;
-    width: 70%;
-    margin: 5vw auto;
-    height: 50px;
+/* apisearch.module.css */
 
-}
-.apiSearch_container select{
-    flex:1;
-}
-.apiSearch_container input{
-    flex: 3;
-    /* height: 100%; */
-}
-.apiSearch_container button{
-    flex: 1;
-}
+.apiSearch_container {
+    width: 70%;
+    margin: 50px auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    
+
+  }
+  
+  .apiSearch_container select,
+  .apiSearch_container input[type="text"],
+  .apiSearch_container button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .apiSearch_container select {
+    min-width: 80px;
+  }
+  
+  .apiSearch_container button {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .apiSearch_container button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .apiSearch_container button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Toaster styles (for displaying toast messages) */
+  .Toastify__toast {
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .Toastify__toast--error {
+    background-color: #dc3545;
+  }
+  

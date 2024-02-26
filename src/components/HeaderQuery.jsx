@@ -1,51 +1,52 @@
 import { AppContext } from "../context/AppContext";
 import styles from "./paramsquery.module.css";
-import { useEffect, useContext} from "react";
+import { useEffect, useContext, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-const ParamsQuery = () => {
+
+const HeaderQuery = () => {
   const {
-    onAddParams,
-    paramsData,
-    tableData,
-    setTableData,
-    paramsNewkey,
-    setParamsNewkey,
-    paramsNewvalue,
-    setParamsNewvalue,
+    onAddHeaders,
+    headersData,
+    headersNewkey,
+    setHeadersNewkey,
+    headersNewvalue,
+    setHeadersNewvalue,
+    tableHeadersData,
+    setTableHeadersData
   } = useContext(AppContext);
 
 
   useEffect(() => {
-    if (paramsData && paramsData.length > 0) {
-      setTableData(paramsData);
-      setParamsNewkey(paramsData[paramsData.length - 1].id); // Make sure it's a string
-      setParamsNewvalue(paramsData[paramsData.length - 1].value); // Make sure it's a string
+    if (headersData && headersData.length > 0) {
+      setTableHeadersData(headersData);
+      setHeadersNewkey(headersData[headersData.length - 1]?.id.toString() || ""); // Default to empty string if headersData is empty
+      setHeadersNewvalue(headersData[headersData.length - 1]?.value.toString() || ""); // Default to empty string if headersData is empty
     }
-  }, [paramsData, setTableData,setParamsNewkey,setParamsNewvalue]);
+  }, [headersData, setTableHeadersData]);
 
   const handleDeleteRow = (id) => {
-    const filterData = tableData.filter((item) => item.id !== id);
-    setTableData([...filterData]);
-    onAddParams([...filterData]);
+    const filterData = tableHeadersData.filter((item) => item.id !== id);
+    setTableHeadersData([...filterData]);
+    onAddHeaders([...filterData]);
   };
 
   const handleSave = () => {
-    if (!paramsNewkey.trim() && !paramsNewvalue.trim()) {
+    if (!headersNewkey || !headersNewvalue) {
       toast.error("Both fields are required");
       return;
     }
 
-    setTableData([...tableData, { id: paramsNewkey, value: paramsNewvalue }]);
-    onAddParams([...tableData, { id: paramsNewkey, value: paramsNewvalue }]);
-    setParamsNewkey("");
-    setParamsNewvalue("");
+    setTableHeadersData([...tableHeadersData, { id: headersNewkey, value: headersNewvalue }]);
+    // onAddHeaders([...tableHeadersData, { id: headersNewkey, value: headersNewvalue }]);
+ 
   };
 
   return (
     <div className={styles.paramsQuery_container}>
-      <Toaster/>
-      <p>Params</p>
+            <Toaster/>
+
+      <p>Headers</p>
       <table>
         <thead>
           <tr>
@@ -55,7 +56,7 @@ const ParamsQuery = () => {
           </tr>
         </thead>
         <tbody>
-          {tableData?.map((item) => (
+          {tableHeadersData?.map((item) => (
             <tr key={item.id}>
               <td>
                 <span>{item.id}</span>
@@ -72,21 +73,19 @@ const ParamsQuery = () => {
             <td>
               <input
                 type='text'
-                value={paramsNewkey}
+                value={headersNewkey}
                 onChange={(e) => {
-                  setParamsNewkey(e.target.value);
+                  setHeadersNewkey(e.target.value);
                 }}
-                required
               />
             </td>
             <td>
               <input
                 type='text'
-                value={paramsNewvalue}
+                value={headersNewvalue}
                 onChange={(e) => {
-                  setParamsNewvalue(e.target.value);
+                  setHeadersNewvalue(e.target.value);
                 }}
-                required
               />
             </td>
             <td>
@@ -99,4 +98,4 @@ const ParamsQuery = () => {
   );
 };
 
-export default ParamsQuery;
+export default HeaderQuery;
