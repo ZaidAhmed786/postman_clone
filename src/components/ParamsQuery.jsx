@@ -1,34 +1,25 @@
 import { AppContext } from "../context/AppContext";
 import styles from "./paramsquery.module.css";
-import { useEffect, useContext,useState} from "react";
+import { useContext, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 const ParamsQuery = () => {
+  const [paramKey, setParamKey] = useState("");
+  const [paramValue, setParamValue] = useState("");
 
-  const [paramKey, setParamKey] = useState("")
-  const [paramValue, setParamValue] = useState("")
-
-
-  const {
-    onAddParams,
-    paramsData,
-  } = useContext(AppContext);
-
-
-
+  const { onAddParams, paramsData } = useContext(AppContext);
 
   const handleDeleteRow = (index) => {
-    const filterData =[];
-    paramsData.map((item,interanlIndex) => {
-      if(index !== interanlIndex){
-        filterData.push(item)
+    const filterData = [];
+    paramsData.map((item, interanlIndex) => {
+      if (index !== interanlIndex) {
+        filterData.push(item);
       }
-     });
+    });
     onAddParams([...filterData]);
   };
 
   const handleSave = () => {
-
     if (!paramKey.trim() && !paramValue.trim()) {
       toast.error("Both fields are required");
       return;
@@ -40,7 +31,7 @@ const ParamsQuery = () => {
 
   return (
     <div className={styles.paramsQuery_container}>
-      <Toaster/>
+      <Toaster />
       <p>Params</p>
       <table>
         <thead>
@@ -51,7 +42,7 @@ const ParamsQuery = () => {
           </tr>
         </thead>
         <tbody>
-          {paramsData?.map((item,index) => (
+          {paramsData?.map((item, index) => (
             <tr key={item.id}>
               <td>
                 <span>{item.id}</span>
@@ -60,7 +51,11 @@ const ParamsQuery = () => {
                 <span>{item.value}</span>
               </td>
               <td>
-                <button onClick={() => handleDeleteRow(index)}>Delete</button>
+                <button
+                  type='danger'
+                  onClick={() => handleDeleteRow(index)}>
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

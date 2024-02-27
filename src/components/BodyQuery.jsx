@@ -3,7 +3,7 @@ import styles from "./paramsquery.module.css";
 import { useContext,useState} from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-const ParamsQuery = () => {
+const BodyQuery = () => {
 
   const [bodyKey, setBodyKey] = useState("")
   const [bodyValue, setBodyValue] = useState("")
@@ -94,5 +94,4 @@ const ParamsQuery = () => {
     </div>
   );
 };
-
-export default ParamsQuery;
+export default BodyQuery

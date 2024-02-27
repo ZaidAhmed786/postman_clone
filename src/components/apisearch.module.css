@@ -20,8 +20,9 @@
   }
   
   .apiSearch_container select {
-    min-width: 100px;
+    min-width: 130px;
   }
+ 
   
   .apiSearch_container button {
     background-color: #007bff;
